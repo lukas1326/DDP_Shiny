@@ -17,7 +17,7 @@ ui <- fluidPage(
         
         selectInput("country",
                     "Countries:",
-                choices = unique(vol$Country)),
+                choices = unique(sort(vol$Country))),
         leafletOutput("mymap"),
         # Create a new row for the table.
         DT::dataTableOutput("table")
