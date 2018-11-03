@@ -9,9 +9,16 @@
 
 library(shiny)
 library(leaflet)
+library(tidyverse)
 
 
 ui <- fluidPage(
+        
+        selectInput("country",
+                    "Countries:",
+                choices = c("Indonesia","Italy")),
         leafletOutput("mymap"),
-        actionButton("recalc", "New points")
+        # Create a new row for the table.
+        DT::dataTableOutput("table")
+        
 )
