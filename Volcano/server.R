@@ -36,6 +36,13 @@ server <- function(input, output, session) {
                         stroke = FALSE,fillOpacity = .8,fillColor = "purple",radius = 5
                         )
         })
+        output$table <- DT::renderDataTable({
+                data <-vol_subset()
+                data <- data %>% select(V_Name,risk,H_active,VEI_Holoce,hazard)
+                DT::datatable(data = data, 
+                              options = list(pageLength = 10), 
+                              rownames = FALSE)
+        })
        
        
 }
