@@ -10,13 +10,14 @@
 library(shiny)
 library(leaflet)
 library(tidyverse)
-
+vol <- read.csv("data/volcano.csv")
+vol <- vol %>% filter(!vol$V_Name=="Unnamed")
 
 ui <- fluidPage(
         
         selectInput("country",
                     "Countries:",
-                choices = c("Indonesia","Italy")),
+                choices = unique(vol$Country)),
         leafletOutput("mymap"),
         # Create a new row for the table.
         DT::dataTableOutput("table")

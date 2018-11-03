@@ -17,17 +17,21 @@ server <- function(input, output, session) {
                 "<b>",vol$V_Name,"</b>","<br>",
                 "Country:",vol$Country
         )
-     
+     vol_subset <- reactive({
+             req(input$country)
+             filter(vol,Country %in% input$country)
+     })
         
         output$mymap <- renderLeaflet({
                
-                vol <- vol[vol$Country == input$country,]
+                data <- vol_subset()
              
                 leaflet() %>%
+                        
                         addProviderTiles(providers$Stamen.TonerLite,
                                          options = providerTileOptions(noWrap = TRUE)
                         ) %>%
-                        addCircleMarkers(lng=vol$Longitude,lat=vol$Latitude,label = lapply(vol$content,HTML
+                        addCircleMarkers(lng=data$Longitude,lat=data$Latitude,label = lapply(data$content,HTML
                         ),
                         stroke = FALSE,fillOpacity = .8,fillColor = "purple",radius = 5
                         )
