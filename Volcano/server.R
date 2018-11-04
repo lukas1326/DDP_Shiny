@@ -13,32 +13,40 @@ server <- function(input, output, session) {
         
         vol <- read.csv("data/volcano.csv")
         vol <- vol %>% filter(!vol$V_Name=="Unnamed")
+       
         vol$content <- paste(
                 "<b>",vol$V_Name,"</b>","<br>",
                 "Country:",vol$Country
         )
+        
      vol_subset <- reactive({
              req(input$country)
              filter(vol,Country %in% input$country)
      })
-        
+     
         output$mymap <- renderLeaflet({
                
                 data <- vol_subset()
-             
+               
                 leaflet() %>%
                         
                         addProviderTiles(providers$Stamen.TonerLite,
                                          options = providerTileOptions(noWrap = TRUE)
                         ) %>%
-                        addCircleMarkers(lng=data$Longitude,lat=data$Latitude,label = lapply(data$content,HTML
-                        ),
-                        stroke = FALSE,fillOpacity = .8,fillColor = "purple",radius = 5
+                        addCircleMarkers(lng=data$Longitude,
+                                         lat=data$Latitude,label = lapply(data$content,HTML),
+                                         stroke = FALSE,fillOpacity = .8,fillColor = "purple",radius = 5
+                                         ) %>% 
+                        addCircleMarkers(lng=data[data$risk==3,]$Longitude,
+                                         lat=data[data$risk==3,]$Latitude,
+    
+                                        stroke = FALSE,fillOpacity = .8,fillColor = "red",radius = 5
                         )
         })
         output$table <- DT::renderDataTable({
                 data <-vol_subset()
                 data <- data %>% select(V_Name,risk,H_active,VEI_Holoce,hazard)
+                
                 DT::datatable(data = data, 
                               options = list(pageLength = 10), 
                               rownames = FALSE)
