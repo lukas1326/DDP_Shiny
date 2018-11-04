@@ -30,7 +30,7 @@ server <- function(input, output, session) {
                
                 leaflet() %>%
                         
-                        addProviderTiles(providers$Stamen.TonerLite,
+                        addProviderTiles(providers$Esri.NatGeoWorldMap,
                                          options = providerTileOptions(noWrap = TRUE)
                         ) %>%
                         addCircleMarkers(lng=data$Longitude,
