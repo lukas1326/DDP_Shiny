@@ -1,0 +1,40 @@
+Global Volcano Model
+========================================================
+author: Olga Lukasevych
+date: 5/11/2018
+autosize: true
+
+Summary
+========================================================
+
+A comprehensive set of information on global volcanic hazard, 
+historical events, population exposure, 
+vulnerability, and impact has been provided to GAR15 by Global Volcano Model (GVM)
+and The International Association of Volcanology and 
+Chemistry of the Earth’s Interior (IAVCEI). 
+This work is the first of its kind in global coverage and level of contribution 
+from a wide network of experts and institutions around the world.
+<br>Source: https://data.humdata.org/dataset/volcano-population-exposure-index-gvm
+
+Instruction for using interactive ShinyApp application
+========================================================
+The Web link application: https://lukas1326.shinyapps.io/Volcano/ <br><br>
+Instruction: <br> 
+                 1. Choose in selection field the country <br> 
+                 2. Explore the map zoomed by volcano place <br>
+                 3. The purple or red dots are volcano's place. The red one is for highest risk <br>
+                 4. The table below shows the subset from the original data by country <br>
+                5. Note! When map display 'Map data not yet available',please Zoom in until the map will appear
+
+
+Countries with the highest risk of volcano activity
+========================================================
+You can explore in detail the most risky volcano's countries before planning your vacation:
+```{r high risk, echo = FALSE,warning=FALSE}
+df <- read.csv("Volcano/data/volcano.csv",stringsAsFactors = FALSE)
+library(tidyverse)
+risk3 <- df %>% filter(risk=="3")
+z <- risk3 %>% count(risk,Country) %>% arrange(desc(n)) %>% top_n(5)
+gg <-ggplot(z,aes(x=factor(z$Country,levels=z$Country),y=z$n)) + geom_bar(stat="identity")
+print(gg)
+```
