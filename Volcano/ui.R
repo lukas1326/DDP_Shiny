@@ -29,7 +29,9 @@ from a wide network of experts and institutions around the world.
                  1. Choose in selection field the country <br> 
                  2. Explore the map zoomed by volcano place <br>
                  3. The purple or red dots are volcano's place. The red one is for highest risk <br>
-                 4. The table below shows the subset from the original data by country <br>"),
+                 4. The table below shows the subset from the original data by country <br>
+                5. Note! When map display 'Map data not yet available',please Zoom in until the map will appear 
+                "),
         selectInput("country",
                     "Countries:",
                 choices = unique(sort(vol$Country))),

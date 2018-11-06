@@ -35,6 +35,18 @@ df <- read.csv("Volcano/data/volcano.csv",stringsAsFactors = FALSE)
 library(tidyverse)
 risk3 <- df %>% filter(risk=="3")
 z <- risk3 %>% count(risk,Country) %>% arrange(desc(n)) %>% top_n(5)
-gg <-ggplot(z,aes(x=factor(z$Country,levels=z$Country),y=z$n)) + geom_bar(stat="identity")
+gg <-ggplot(z,aes(x=factor(z$Country,levels=z$Country),y=z$n)) + geom_bar(stat="identity") + xlab("Country")+ ylab("Number of risk volcano's")
 print(gg)
 ```
+Active volcano
+========================================================
+Also, the information of the top numbers of active volcano's could be helpful too.  
+
+```{r nz,echo = FALSE,warning=FALSE,message=FALSE}
+risk4 <- df %>% filter(H_active=="1")
+z <- risk4 %>% count(H_active,Country) %>% arrange(desc(n)) %>% top_n(5)
+gg1 <-ggplot(z,aes(x=factor(z$Country,levels=z$Country),y=z$n)) + geom_bar(stat="identity") + xlab("Country")+ ylab("Number of active volcano's")
+print(gg1)
+```   
+
+<h6>Please observe the table from the link https://lukas1326.shinyapps.io/Volcano/ for details.
